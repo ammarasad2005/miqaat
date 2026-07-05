@@ -2,7 +2,7 @@
 
 export const themeTransitionPreset = {
   duration: 0.8,
-  ease: [0.4, 0, 0.2, 1], // Custom cubic-bezier matching the CSS transition
+  ease: [0.4, 0, 0.2, 1] as const,
 };
 
 export const springPreset = {
