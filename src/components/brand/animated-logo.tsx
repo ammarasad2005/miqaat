@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { LogoMark } from './logo-mark';
 import { cn } from '@/lib/utils';
 
@@ -14,7 +14,7 @@ export function AnimatedLogo({ className, animateIn = false }: AnimatedLogoProps
   const [isHovered, setIsHovered] = React.useState(false);
   const prefersReducedMotion = useReducedMotion();
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { opacity: 0, x: -10 },
     visible: { 
       opacity: 1, 

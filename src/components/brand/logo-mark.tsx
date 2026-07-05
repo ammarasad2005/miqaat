@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface LogoMarkProps extends React.ComponentProps<typeof motion.svg> {
@@ -13,7 +13,7 @@ interface LogoMarkProps extends React.ComponentProps<typeof motion.svg> {
 export function LogoMark({ animateIn = false, isHovered = false, reducedMotion = false, className, ...props }: LogoMarkProps) {
   
   // Animation variants
-  const lineVariants = {
+  const lineVariants: Variants = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: { 
       pathLength: 1, 
@@ -22,7 +22,7 @@ export function LogoMark({ animateIn = false, isHovered = false, reducedMotion =
     }
   };
 
-  const sunVariants = {
+  const sunVariants: Variants = {
     hidden: { y: 6, opacity: 0 },
     visible: { 
       y: 0, 
@@ -36,7 +36,7 @@ export function LogoMark({ animateIn = false, isHovered = false, reducedMotion =
     }
   };
 
-  const archVariants = {
+  const archVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
@@ -44,7 +44,7 @@ export function LogoMark({ animateIn = false, isHovered = false, reducedMotion =
     }
   };
 
-  const starsVariants = {
+  const starsVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
