@@ -128,9 +128,9 @@
 }
 
 [data-time-of-day="night"] {
-  --time-bg: oklch(0.2 0.04 260); /* Deep navy */
-  --time-bg-end: oklch(0.12 0.02 260); /* Near-black */
-  --time-card: oklch(0.25 0.03 260);
+  --time-bg: oklch(0.25 0.08 260); /* Deep navy */
+  --time-bg-end: oklch(0.1 0.01 260); /* Near-black */
+  --time-card: oklch(0.2 0.04 260);
   --time-text: oklch(0.95 0.02 260);
   --time-accent: oklch(0.7 0.1 280);
   --time-glow: oklch(0.7 0.1 280 / 20%);

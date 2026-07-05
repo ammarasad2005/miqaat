@@ -8,29 +8,53 @@ interface GeometricPatternProps extends React.SVGProps<SVGSVGElement> {
 export function GeometricPattern({ className, ...props }: GeometricPatternProps) {
   return (
     <svg
-      viewBox="0 0 100 100"
-      className={cn('absolute inset-0 h-full w-full opacity-[0.03] pointer-events-none mix-blend-overlay', className)}
+      className={cn('absolute inset-0 h-full w-full pointer-events-none mix-blend-overlay opacity-5', className)}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <defs>
-        <pattern id="islamic-motif" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path
-            d="M20 0 L40 20 L20 40 L0 20 Z M10 10 L30 30 M30 10 L10 30 M0 20 L40 20 M20 0 L20 40"
-            stroke="currentColor"
-            strokeWidth="0.5"
-            fill="none"
-          />
-          <circle cx="20" cy="20" r="10" stroke="currentColor" strokeWidth="0.5" fill="none" />
-          <path
-            d="M20 10 A10 10 0 0 1 30 20 A10 10 0 0 1 20 30 A10 10 0 0 1 10 20 A10 10 0 0 1 20 10"
-            stroke="currentColor"
-            strokeWidth="0.25"
-            fill="none"
-          />
+        {/* Genuine 8-point Islamic star tiling motif */}
+        <pattern id="islamic-arabesque" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+          <g stroke="currentColor" strokeWidth="1.2" fill="none">
+            {/* Center Star (Khatam) */}
+            <g transform="translate(50, 50)">
+              <rect x="-15" y="-15" width="30" height="30" />
+              <rect x="-15" y="-15" width="30" height="30" transform="rotate(45)" />
+            </g>
+            
+            {/* Corner Stars */}
+            <g transform="translate(0, 0)">
+              <rect x="-15" y="-15" width="30" height="30" />
+              <rect x="-15" y="-15" width="30" height="30" transform="rotate(45)" />
+            </g>
+            <g transform="translate(100, 0)">
+              <rect x="-15" y="-15" width="30" height="30" />
+              <rect x="-15" y="-15" width="30" height="30" transform="rotate(45)" />
+            </g>
+            <g transform="translate(0, 100)">
+              <rect x="-15" y="-15" width="30" height="30" />
+              <rect x="-15" y="-15" width="30" height="30" transform="rotate(45)" />
+            </g>
+            <g transform="translate(100, 100)">
+              <rect x="-15" y="-15" width="30" height="30" />
+              <rect x="-15" y="-15" width="30" height="30" transform="rotate(45)" />
+            </g>
+
+            {/* Connecting octagonal web lines */}
+            <path d="M 15 0 L 35 15 L 50 0 L 65 15 L 85 0" />
+            <path d="M 0 15 L 15 35 L 0 50 L 15 65 L 0 85" />
+            <path d="M 100 15 L 85 35 L 100 50 L 85 65 L 100 85" />
+            <path d="M 15 100 L 35 85 L 50 100 L 65 85 L 85 100" />
+            
+            {/* Diamond cross-links */}
+            <path d="M 25 25 L 35 35 L 50 25 L 65 35 L 75 25 L 65 15 L 50 25 L 35 15 Z" />
+            <path d="M 25 75 L 35 65 L 50 75 L 65 65 L 75 75 L 65 85 L 50 75 L 35 85 Z" />
+            <path d="M 15 35 L 25 50 L 15 65" />
+            <path d="M 85 35 L 75 50 L 85 65" />
+          </g>
         </pattern>
       </defs>
-      <rect width="100%" height="100%" fill="url(#islamic-motif)" />
+      <rect width="100%" height="100%" fill="url(#islamic-arabesque)" />
     </svg>
   );
 }
