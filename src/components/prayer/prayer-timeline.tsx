@@ -31,6 +31,24 @@ export function PrayerTimeline() {
   const currentPrayerState = useCurrentPrayer();
   const [expandedNode, setExpandedNode] = React.useState<PrayerName | null>(null);
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setExpandedNode(null);
+    };
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.timeline-node')) {
+        setExpandedNode(null);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   // We need today's times to render the list.
   // We compute it once per render, which is fine since it's just local date math,
   // or we could memoize it.
@@ -56,22 +74,43 @@ export function PrayerTimeline() {
   const is24h = timeFormat === '24h';
 
   return (
-    <div className="relative flex flex-col space-y-0 py-6 w-full mx-auto">
-      {/* Central rail line */}
-      <div className="absolute left-[2.25rem] top-10 bottom-10 w-0.5 bg-border -z-10" />
+    <div className="relative flex flex-col space-y-0 py-6 w-full mx-auto" role="list" aria-label="Prayer Timeline">
 
-      {PRAYER_SEQUENCE.map((prayerName) => {
+      {PRAYER_SEQUENCE.map((prayerName, index) => {
         const time = todayTimes[prayerName];
         const isCurrent = current.name === prayerName;
         const isNext = next.name === prayerName;
         const isPast = time.getTime() < currentPrayerState.now.getTime() && !isCurrent;
+        const isFuture = !isPast && !isCurrent;
         
         return (
           <div 
             key={prayerName}
-            className="relative flex items-start gap-8 py-5 cursor-pointer group"
-            onClick={() => setExpandedNode(expandedNode === prayerName ? null : prayerName)}
+            className={cn(
+              "timeline-node relative flex items-start gap-8 py-5 group transition-opacity duration-300 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary",
+              isPast && "opacity-50 grayscale-[50%]",
+              isFuture && "cursor-pointer hover:bg-muted/20"
+            )}
+            role={isFuture ? "button" : "listitem"}
+            tabIndex={isFuture ? 0 : undefined}
+            aria-expanded={isFuture ? expandedNode === prayerName : undefined}
+            onClick={() => {
+              if (isFuture) setExpandedNode(expandedNode === prayerName ? null : prayerName);
+            }}
+            onKeyDown={(e) => {
+              if (isFuture && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                setExpandedNode(expandedNode === prayerName ? null : prayerName);
+              }
+            }}
           >
+            {/* Segment connecting to next node */}
+            {index < PRAYER_SEQUENCE.length - 1 && (
+              <div className={cn(
+                "absolute left-[2.25rem] top-[2.5rem] bottom-[-1.25rem] w-[2px] -translate-x-1/2 -z-10",
+                (isPast || isCurrent) ? "bg-muted-foreground/40" : "bg-border/50"
+              )} />
+            )}
             {/* Node marker container */}
             <div className="relative flex h-8 w-16 shrink-0 items-center justify-center">
               {/* Outer Glow (Animated for Current) */}
@@ -90,7 +129,7 @@ export function PrayerTimeline() {
                 className={cn(
                   "relative z-10 h-5 w-5 rounded-full border-[3px] transition-colors duration-500",
                   isCurrent ? "border-primary bg-background shadow-[0_0_20px_var(--color-time-glow)] ring-4 ring-primary/20" : 
-                  isPast ? "border-border bg-background/50" : 
+                  isPast ? "border-muted-foreground bg-muted-foreground/20" : 
                   "border-muted-foreground bg-background"
                 )}
               />
@@ -137,7 +176,7 @@ export function PrayerTimeline() {
                           </div>
                         </div>
                       ) : (
-                        <span>Exact time: {format(time, is24h ? 'HH:mm:ss' : 'hh:mm:ss a')}</span>
+                        <span>{format(time, is24h ? 'HH:mm:ss' : 'hh:mm:ss a')}</span>
                       )}
                     </div>
                   </motion.div>

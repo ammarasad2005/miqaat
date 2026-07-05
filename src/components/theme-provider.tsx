@@ -18,6 +18,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     const activeState = override || timeOfDay;
     document.documentElement.setAttribute('data-time-of-day', activeState);
+    
+    // Enable slow CSS transitions only after the first paint is complete
+    // so the initial load doesn't slowly fade in from default colors
+    const timeout = setTimeout(() => {
+      document.documentElement.classList.add('theme-loaded');
+    }, 50);
+
+    return () => clearTimeout(timeout);
   }, [timeOfDay, override]);
 
   return <>{children}</>;

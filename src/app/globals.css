@@ -154,14 +154,14 @@
     scrollbar-gutter: stable;
   }
   
-  html, body, .card, [data-theme-transition] {
+  html.theme-loaded, .theme-loaded body, .theme-loaded .card, .theme-loaded [data-theme-transition] {
     transition-property: background-color, border-color, color, fill, stroke, box-shadow, --time-bg, --time-bg-end;
     transition-duration: 60s;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   @media (prefers-reduced-motion: reduce) {
-    html, body, .card, [data-theme-transition] {
+    html.theme-loaded, .theme-loaded body, .theme-loaded .card, .theme-loaded [data-theme-transition] {
       transition-duration: 0.1s;
     }
   }
