@@ -13,6 +13,7 @@ import { CalendarDays, Clock, Settings, Compass } from 'lucide-react';
 import Link from 'next/link';
 import { NotificationScheduler } from '@/components/prayer/notification-scheduler';
 import { WeatherWidget } from '@/components/weather/weather-widget';
+import { ReflectionPanel } from '@/components/reflection/reflection-panel';
 
 export default function Home() {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -107,6 +108,10 @@ export default function Home() {
 
             <div className="w-full transition-all duration-500 ease-in-out">
               {viewMode === 'timeline' ? <PrayerTimeline /> : <HijriMonthView />}
+            </div>
+
+            <div className="w-full mt-6">
+              <ReflectionPanel />
             </div>
           </div>
         )}
