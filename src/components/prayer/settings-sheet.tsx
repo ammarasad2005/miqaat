@@ -15,6 +15,7 @@ import { CALCULATION_METHODS, CalculationMethodId } from '@/lib/prayer/methods';
 import { LocationSetup } from './location-setup';
 import { NotificationSetup } from './notification-setup';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 export function SettingsSheet() {
   const { calculationMethod, setCalculationMethod, timeFormat, setTimeFormat } = useSettingsStore();
@@ -35,20 +36,20 @@ export function SettingsSheet() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="space-y-8 pb-12">
+        <div className="space-y-10 pb-12 px-2 sm:px-0">
           {/* Location Override */}
-          <section className="space-y-4">
-            <h3 className="font-heading font-medium text-lg">Location</h3>
-            <div className="rounded-2xl border border-border bg-card p-4">
+          <section>
+            <h3 className="text-xs font-bold tracking-widest text-primary uppercase mb-3">Location</h3>
+            <div className="rounded-3xl border border-border/50 bg-card/50 backdrop-blur-md p-5 shadow-sm">
               <LocationSetup />
             </div>
           </section>
 
           {/* Time Format */}
-          <section className="space-y-4">
-            <h3 className="font-heading font-medium text-lg">Time Format</h3>
+          <section>
+            <h3 className="text-xs font-bold tracking-widest text-primary uppercase mb-3">Time Format</h3>
             <div 
-              className="flex p-1 rounded-xl bg-muted/50" 
+              className="relative flex p-1.5 rounded-2xl bg-muted/40 backdrop-blur-md border border-border/50 shadow-sm" 
               role="radiogroup" 
               aria-label="Time format selection"
             >
@@ -59,12 +60,19 @@ export function SettingsSheet() {
                   aria-checked={timeFormat === format}
                   onClick={() => setTimeFormat(format)}
                   className={cn(
-                    "flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                    "relative flex-1 py-2.5 px-4 rounded-xl text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary z-10",
                     timeFormat === format 
-                      ? "bg-card shadow-sm text-foreground ring-1 ring-border" 
+                      ? "text-primary-foreground" 
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
+                  {timeFormat === format && (
+                    <motion.div
+                      layoutId="timeFormatIndicator"
+                      className="absolute inset-0 bg-primary rounded-xl -z-10 shadow-sm"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
                   {format.toUpperCase()}
                 </button>
               ))}
@@ -72,14 +80,16 @@ export function SettingsSheet() {
           </section>
 
           {/* Notifications */}
-          <section className="space-y-4">
-            <h3 className="font-heading font-medium text-lg">Reminders</h3>
-            <NotificationSetup />
+          <section>
+            <h3 className="text-xs font-bold tracking-widest text-primary uppercase mb-3">Reminders</h3>
+            <div className="rounded-3xl border border-border/50 bg-card/50 backdrop-blur-md p-5 shadow-sm">
+              <NotificationSetup />
+            </div>
           </section>
 
           {/* Calculation Method */}
-          <section className="space-y-4">
-            <h3 className="font-heading font-medium text-lg">Calculation Method</h3>
+          <section>
+            <h3 className="text-xs font-bold tracking-widest text-primary uppercase mb-3">Calculation Method</h3>
             <div className="space-y-3" role="radiogroup" aria-label="Prayer calculation method">
               {(Object.keys(CALCULATION_METHODS) as CalculationMethodId[]).map((methodId) => {
                 const method = CALCULATION_METHODS[methodId];
@@ -99,16 +109,23 @@ export function SettingsSheet() {
                       }
                     }}
                     className={cn(
-                      "flex flex-col p-4 rounded-xl border transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                      "relative flex flex-col p-4 rounded-2xl border transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden",
                       isSelected 
-                        ? "border-primary bg-primary/10 shadow-sm" 
-                        : "border-border hover:border-primary/50 hover:bg-muted/30"
+                        ? "border-primary/50 shadow-sm" 
+                        : "border-border/50 bg-card/30 hover:border-primary/30 hover:bg-card/50 backdrop-blur-sm"
                     )}
                   >
+                    {isSelected && (
+                      <motion.div
+                        layoutId="calcMethodIndicator"
+                        className="absolute inset-0 bg-primary/10 -z-10"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
                     <span className={cn("font-medium mb-1", isSelected ? "text-primary" : "text-foreground")}>
                       {method.name}
                     </span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-muted-foreground leading-snug">
                       {method.regionDescription}
                     </span>
                   </div>

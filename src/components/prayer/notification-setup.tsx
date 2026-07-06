@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useSettingsStore } from '@/lib/store/settingsStore';
 import { cn } from '@/lib/utils';
 import { Bell, BellOff, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function NotificationSetup() {
   const { notificationsEnabled, setNotificationsEnabled, notificationOffset, setNotificationOffset } = useSettingsStore();
@@ -51,62 +52,81 @@ export function NotificationSetup() {
   }
 
   return (
-    <div className="flex flex-col space-y-4 p-4 rounded-2xl border border-border bg-card">
+    <div className="flex flex-col space-y-5">
       <div className="flex items-start justify-between">
-        <div className="space-y-1 pr-4">
-          <h4 className="font-heading font-medium text-foreground">Prayer Reminders</h4>
+        <div className="space-y-1.5 pr-4">
+          <h4 className="font-medium text-foreground">Status</h4>
           <p className="text-sm text-muted-foreground leading-snug">
-            Receive browser notifications before each prayer time.
+            Receive a native browser alert before each prayer time.
           </p>
         </div>
         <button
           onClick={handleToggle}
           className={cn(
-            "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap",
+            "relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary whitespace-nowrap overflow-hidden",
             notificationsEnabled 
-              ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90" 
-              : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+              ? "text-primary-foreground shadow-md" 
+              : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
           )}
         >
+          {notificationsEnabled && (
+             <motion.div
+               layoutId="notificationsToggleBg"
+               className="absolute inset-0 bg-primary -z-10"
+               initial={{ opacity: 0 }}
+               animate={{ opacity: 1 }}
+               transition={{ duration: 0.2 }}
+             />
+          )}
           {notificationsEnabled ? (
             <>
-              <Bell className="w-3.5 h-3.5" />
+              <Bell className="w-4 h-4" />
               Enabled
             </>
           ) : (
             <>
-              <BellOff className="w-3.5 h-3.5" />
+              <BellOff className="w-4 h-4" />
               Disabled
             </>
           )}
         </button>
       </div>
 
-      <div 
-        className={cn(
-          "flex p-1 rounded-xl transition-all duration-300", 
-          notificationsEnabled ? "bg-muted/50" : "bg-muted/20 opacity-50 pointer-events-none"
-        )} 
-        role="radiogroup" 
-        aria-label="Minutes before reminder"
-      >
-        {([5, 10, 15] as const).map((offset) => (
-          <button
-            key={offset}
-            role="radio"
-            aria-checked={notificationOffset === offset}
-            onClick={() => setNotificationOffset(offset)}
-            disabled={!notificationsEnabled}
-            className={cn(
-              "flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-              notificationOffset === offset 
-                ? "bg-card shadow-sm text-foreground ring-1 ring-border" 
-                : "text-muted-foreground hover:text-foreground"
-            )}
-          >
-            {offset} min
-          </button>
-        ))}
+      <div className="space-y-3">
+        <h4 className="font-medium text-sm text-foreground">Offset Time</h4>
+        <div 
+          className={cn(
+            "relative flex p-1.5 rounded-2xl transition-all duration-300 backdrop-blur-md border border-border/50 shadow-sm", 
+            notificationsEnabled ? "bg-muted/40" : "bg-muted/20 opacity-50 pointer-events-none"
+          )} 
+          role="radiogroup" 
+          aria-label="Minutes before reminder"
+        >
+          {([5, 10, 15] as const).map((offset) => (
+            <button
+              key={offset}
+              role="radio"
+              aria-checked={notificationOffset === offset}
+              onClick={() => setNotificationOffset(offset)}
+              disabled={!notificationsEnabled}
+              className={cn(
+                "relative flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary z-10",
+                notificationOffset === offset 
+                  ? "text-primary-foreground" 
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {notificationOffset === offset && (
+                <motion.div
+                  layoutId="notificationOffsetIndicator"
+                  className="absolute inset-0 bg-primary rounded-xl -z-10 shadow-sm"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              {offset} min
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
