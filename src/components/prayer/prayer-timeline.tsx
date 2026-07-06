@@ -79,7 +79,7 @@ export function PrayerTimeline() {
   const is24h = timeFormat === '24h';
 
   return (
-    <div className="relative flex flex-col space-y-0 py-6 w-full mx-auto" role="list" aria-label="Prayer Timeline">
+    <div className="relative flex flex-col space-y-0 py-2 w-full mx-auto" role="list" aria-label="Prayer Timeline">
 
       {PRAYER_SEQUENCE.map((prayerName, index) => {
         const time = timelineTimes[prayerName];
@@ -96,7 +96,7 @@ export function PrayerTimeline() {
           <div 
             key={prayerName}
             className={cn(
-              "timeline-node relative flex items-start gap-8 py-5 group transition-opacity duration-300 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary",
+              "timeline-node relative flex items-start gap-8 py-3 group transition-opacity duration-300 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary",
               isPast && "opacity-50",
               isFuture && "cursor-pointer hover:bg-muted/20"
             )}
@@ -116,7 +116,7 @@ export function PrayerTimeline() {
             {/* Segment connecting to next node */}
             {index < PRAYER_SEQUENCE.length - 1 && (
               <div className={cn(
-                "absolute left-[2.25rem] top-[2.5rem] bottom-[-1.25rem] -translate-x-1/2 -z-10 rounded-full",
+                "absolute left-[2.25rem] top-[1.75rem] bottom-[-0.75rem] -translate-x-1/2 -z-10 rounded-full",
                 isRailCompleted ? "w-[3px] bg-primary/50" : "w-[1px] bg-border/50"
               )} />
             )}
@@ -175,7 +175,7 @@ export function PrayerTimeline() {
                     transition={themeTransitionPreset}
                     className="overflow-hidden"
                   >
-                    <div className="flex items-center gap-2 mt-3 text-sm text-muted-foreground bg-muted/40 rounded-xl p-4 border border-border/50">
+                    <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground bg-muted/40 rounded-xl p-3 border border-border/50">
                       <Clock className="w-5 h-5 text-primary shrink-0" />
                       {next.name === prayerName ? (
                         <div className="flex flex-col">

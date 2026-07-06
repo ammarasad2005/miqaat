@@ -32,10 +32,10 @@ export default function Home() {
       <SplashScreen show={!isMounted} />
       <NotificationScheduler />
       <main className={cn(
-        "flex min-h-screen flex-col items-center justify-start p-4 pt-6 md:p-12 relative z-10 transition-opacity duration-1000",
+        "flex min-h-screen flex-col items-center justify-start p-4 pt-4 md:p-12 relative z-10 transition-opacity duration-1000",
         !isMounted ? "opacity-0" : "opacity-100"
       )}>
-        <div className="w-full max-w-2xl mx-auto space-y-8">
+        <div className="w-full max-w-2xl mx-auto space-y-6">
         
         {/* Header Section */}
         <header className="flex items-center justify-between w-full pb-4">
@@ -44,17 +44,17 @@ export default function Home() {
             <WeatherWidget />
             <Link 
               href="/qibla"
-              className="inline-flex p-2 rounded-full hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+              className="inline-flex p-2.5 rounded-full hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label="Open Qibla compass"
             >
-              <Compass className="w-5 h-5 text-foreground" />
+              <Compass className="w-6 h-6 text-foreground" />
             </Link>
             <Link 
               href="/settings"
-              className="inline-flex p-2 rounded-full hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+              className="inline-flex p-2.5 rounded-full hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label="Open settings"
             >
-              <Settings className="w-5 h-5 text-foreground" />
+              <Settings className="w-6 h-6 text-foreground" />
             </Link>
           </div>
         </header>
@@ -76,9 +76,9 @@ export default function Home() {
             <LocationSetup />
           </div>
         ) : (
-          <div className="w-full mt-4 flex flex-col items-center">
+          <div className="w-full mt-2 flex flex-col items-center">
             {/* View Toggle */}
-            <div className="flex bg-muted/30 p-1 rounded-full mb-6 border border-border/50 backdrop-blur-md">
+            <div className="flex bg-muted/30 p-1 rounded-full mb-4 border border-border/50 backdrop-blur-md">
               <button
                 onClick={() => setViewMode('timeline')}
                 className={cn(
