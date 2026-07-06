@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { getHijriMonthGrid, getNextMonth, getPrevMonth, CalendarDay } from '@/lib/hijri/calendar';
+import { getHijriMonthGrid, getNextMonth, getPrevMonth } from '@/lib/hijri/calendar';
 import { getEventsForGregorianDate, IslamicEvent } from '@/lib/hijri/events';
 import { toHijri } from '@/lib/hijri/convert';
 import { themeTransitionPreset } from '@/lib/theme/motion';
@@ -20,12 +20,10 @@ export function HijriMonthView() {
 
   React.useEffect(() => {
     const now = new Date();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: avoids hydration mismatch with Date()
     setCurrentDate(now);
     const hijri = toHijri(now);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setViewState({ year: hijri.year, month: hijri.monthName });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {

@@ -120,7 +120,7 @@ export default function WeatherPage() {
                         <HIcon className="w-6 h-6 my-2 text-foreground/80" />
                         <span className="text-sm font-medium">{temp}°</span>
                         {precip > 10 ? (
-                          <span className="text-[10px] text-blue-400 mt-2 font-medium">{precip}%</span>
+                          <span className="text-[10px] text-primary/70 mt-2 font-medium">{precip}%</span>
                         ) : (
                           <span className="text-[10px] text-transparent mt-2">0%</span>
                         )}
@@ -169,7 +169,7 @@ export default function WeatherPage() {
                   <h3 className="font-heading text-lg font-semibold mb-2">Solar Times</h3>
                   {data.daily?.sunrise?.[0] && (
                     <div className="flex items-center gap-4 bg-card/30 p-4 rounded-2xl border border-border/20">
-                      <Sunrise className="w-8 h-8 text-amber-500/80" />
+                      <Sunrise className="w-8 h-8 text-primary/80" />
                       <div>
                         <div className="text-xs text-muted-foreground uppercase tracking-wider mb-0.5">Sunrise</div>
                         <div className="text-lg font-medium">
@@ -180,7 +180,7 @@ export default function WeatherPage() {
                   )}
                   {data.daily?.sunset?.[0] && (
                     <div className="flex items-center gap-4 bg-card/30 p-4 rounded-2xl border border-border/20">
-                      <Sunset className="w-8 h-8 text-orange-500/80" />
+                      <Sunset className="w-8 h-8 text-primary/80" />
                       <div>
                         <div className="text-xs text-muted-foreground uppercase tracking-wider mb-0.5">Sunset</div>
                         <div className="text-lg font-medium">

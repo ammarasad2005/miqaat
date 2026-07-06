@@ -114,6 +114,7 @@
   
   --logo-base: #0F4C4C;
   --logo-sun: #E67E22; /* Orange-toned sun */
+  --logo-star-opacity: 0;
 }
 
 [data-time-of-day="day"] {
@@ -126,6 +127,7 @@
   
   --logo-base: #0F4C4C;
   --logo-sun: #F1C40F; /* Bright gold */
+  --logo-star-opacity: 0;
 }
 
 [data-time-of-day="golden"] {
@@ -138,6 +140,7 @@
   
   --logo-base: #FAFAF8; /* Ivory base logo */
   --logo-sun: #F1C40F; /* Golden sun */
+  --logo-star-opacity: 0;
 }
 
 [data-time-of-day="night"] {

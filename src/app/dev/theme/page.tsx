@@ -14,11 +14,11 @@ const states: { id: TimeOfDay; name: string; desc: string }[] = [
 
 export default function ThemeQAPage() {
   return (
-    <div className="min-h-screen p-8 bg-black/5">
+    <div className="min-h-screen p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         <div>
-          <h1 className="text-4xl font-heading font-bold">Theme Engine QA</h1>
-          <p className="text-black/60 mt-2 font-sans">
+          <h1 className="text-4xl font-heading font-bold text-foreground">Theme Engine QA</h1>
+          <p className="text-muted-foreground mt-2 font-sans">
             Preview of the 4 time-adaptive states side-by-side.
           </p>
         </div>
