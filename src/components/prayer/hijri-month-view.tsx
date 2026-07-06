@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { getHijriMonthGrid, getNextMonth, getPrevMonth, CalendarDay } from '@/lib/hijri/calendar';
-import { getEventsForGregorianDate } from '@/lib/hijri/events';
+import { getEventsForGregorianDate, IslamicEvent } from '@/lib/hijri/events';
 import { toHijri } from '@/lib/hijri/convert';
 import { themeTransitionPreset } from '@/lib/theme/motion';
 import { cn } from '@/lib/utils';
@@ -14,14 +14,16 @@ const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export function HijriMonthView() {
   const [currentDate, setCurrentDate] = React.useState<Date | null>(null);
-  const [viewState, setViewState] = React.useState<{ year: number, month: string } | null>(null);
   const [direction, setDirection] = React.useState(0);
+  const [selectedEvent, setSelectedEvent] = React.useState<IslamicEvent | null>(null);
+  const [viewState, setViewState] = React.useState<{ year: number, month: string } | null>(null);
 
   React.useEffect(() => {
     const now = new Date();
     setCurrentDate(now);
     const hijri = toHijri(now);
     setViewState({ year: hijri.year, month: hijri.monthName });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!currentDate || !viewState) {
@@ -131,12 +133,16 @@ export function HijriMonthView() {
                     return (
                       <div 
                         key={dIdx} 
+                        onClick={() => hasEvent && setSelectedEvent(events[0])}
+                        role={hasEvent ? "button" : undefined}
+                        tabIndex={hasEvent ? 0 : undefined}
                         className={cn(
                           "relative aspect-square flex flex-col items-center justify-center p-1 rounded-xl transition-all",
                           day.isPadding ? "opacity-30" : "hover:bg-muted/50",
+                          hasEvent && "cursor-pointer active:scale-95",
                           isToday && "ring-2 ring-primary bg-primary/10 shadow-[0_0_15px_var(--color-time-glow)]",
                           isFriday && !isToday && !day.isPadding && "bg-primary/5",
-                          hasEvent && !isToday && "ring-1 ring-primary/40 bg-primary/5"
+                          hasEvent && !isToday && "ring-1 ring-primary/40 bg-primary/5 hover:bg-primary/10"
                         )}
                       >
                         {/* Gregorian Date */}
@@ -171,6 +177,43 @@ export function HijriMonthView() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Event Popup Overlay */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+              onClick={() => setSelectedEvent(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={themeTransitionPreset}
+              className="relative w-full max-w-sm bg-card border border-border shadow-2xl rounded-3xl p-6 md:p-8 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
+              <button 
+                onClick={() => setSelectedEvent(null)}
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted text-muted-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <h3 className="text-2xl font-heading font-bold text-primary mb-3 mt-2 pr-6">
+                {selectedEvent.name}
+              </h3>
+              <p className="text-muted-foreground font-sans leading-relaxed text-sm md:text-base">
+                {selectedEvent.description}
+              </p>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

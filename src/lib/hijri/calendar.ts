@@ -48,7 +48,7 @@ export function getHijriMonthGrid(hijriYear: number, monthName: string): Calenda
 
   // Collect all days of this month
   const monthDays: CalendarDay[] = [];
-  let current = new Date(start);
+  const current = new Date(start);
   while (true) {
     const h = toHijri(current);
     if (h.monthName !== monthName || h.year !== hijriYear) break;
@@ -82,7 +82,7 @@ export function getHijriMonthGrid(hijriYear: number, monthName: string): Calenda
   // Next month padding
   const lastDayOfWeek = paddedGrid[paddedGrid.length - 1].date.getDay();
   if (lastDayOfWeek !== 6) {
-    let nextCurrent = new Date(monthDays[monthDays.length - 1].date);
+    const nextCurrent = new Date(monthDays[monthDays.length - 1].date);
     nextCurrent.setDate(nextCurrent.getDate() + 1);
     const daysToAdd = 6 - lastDayOfWeek;
     for (let i = 0; i < daysToAdd; i++) {

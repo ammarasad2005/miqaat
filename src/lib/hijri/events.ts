@@ -4,13 +4,14 @@ export interface IslamicEvent {
   name: string;
   monthName: string;
   day: number;
+  description: string;
 }
 
 export const MAJOR_EVENTS: IslamicEvent[] = [
-  { name: 'Ashura', monthName: 'Muharram', day: 10 },
-  { name: 'Ramadan Begins', monthName: 'Ramadan', day: 1 },
-  { name: 'Eid al-Fitr', monthName: 'Shawwal', day: 1 },
-  { name: 'Eid al-Adha', monthName: 'Dhuʻl-Hijjah', day: 10 },
+  { name: 'Ashura', monthName: 'Muharram', day: 10, description: 'The 10th of Muharram, a day of fasting and remembrance.' },
+  { name: 'Ramadan Begins', monthName: 'Ramadan', day: 1, description: 'The start of the holiest month of fasting, prayer, and reflection.' },
+  { name: 'Eid al-Fitr', monthName: 'Shawwal', day: 1, description: 'The Festival of Breaking the Fast, celebrating the end of Ramadan.' },
+  { name: 'Eid al-Adha', monthName: 'Dhuʻl-Hijjah', day: 10, description: 'The Festival of Sacrifice, culminating the Hajj pilgrimage.' },
 ];
 
 /**
