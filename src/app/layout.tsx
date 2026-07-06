@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Lora, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NightAtmosphere } from "@/components/ui/night-atmosphere";
+import { WeatherFetcher } from "@/components/weather/weather-fetcher";
 import "./globals.css";
 
 const inter = Inter({
@@ -88,7 +89,10 @@ export default function RootLayout({
         </noscript>
         <NightAtmosphere className="fixed text-foreground opacity-30 z-0 mix-blend-overlay pointer-events-none" />
         <div className="relative z-10 flex-1 flex flex-col">
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <WeatherFetcher />
+            {children}
+          </ThemeProvider>
         </div>
       </body>
     </html>
