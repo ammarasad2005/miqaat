@@ -13,7 +13,7 @@ import { CalendarDays, Clock, Settings, Compass } from 'lucide-react';
 import Link from 'next/link';
 import { NotificationScheduler } from '@/components/prayer/notification-scheduler';
 import { WeatherWidget } from '@/components/weather/weather-widget';
-import { ReflectionPanel } from '@/components/reflection/reflection-panel';
+import { DailyContentPanel } from '@/components/reflection/daily-content-panel';
 
 export default function Home() {
   const [isMounted, setIsMounted] = React.useState(false);
@@ -111,7 +111,7 @@ export default function Home() {
             </div>
 
             <div className="w-full mt-6">
-              <ReflectionPanel />
+              <DailyContentPanel />
             </div>
           </div>
         )}
