@@ -75,13 +75,17 @@ export function WeatherWidget() {
 
   let Icon = Cloud;
   const code = data.conditionCode;
+  
   if (code === undefined) Icon = CloudOff;
-  else if (code >= 200 && code < 300) Icon = CloudLightning;
-  else if (code >= 300 && code < 400) Icon = CloudDrizzle;
-  else if (code >= 500 && code < 600) Icon = CloudRain;
-  else if (code >= 600 && code < 700) Icon = Snowflake;
-  else if (code >= 700 && code < 800) Icon = CloudFog;
-  else if (code === 800) Icon = Sun;
+  else if (code === 0) Icon = Sun; // Clear sky
+  else if (code === 1 || code === 2 || code === 3) Icon = Cloud; // Mainly clear, partly cloudy, overcast
+  else if (code === 45 || code === 48) Icon = CloudFog; // Fog
+  else if (code >= 51 && code <= 57) Icon = CloudDrizzle; // Drizzle
+  else if (code >= 61 && code <= 67) Icon = CloudRain; // Rain
+  else if (code >= 71 && code <= 77) Icon = Snowflake; // Snow
+  else if (code >= 80 && code <= 82) Icon = CloudRain; // Rain showers
+  else if (code === 85 || code === 86) Icon = Snowflake; // Snow showers
+  else if (code >= 95) Icon = CloudLightning; // Thunderstorm
 
   return (
     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/30 border border-border/50 backdrop-blur-md text-muted-foreground text-xs font-medium font-sans shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-opacity">
