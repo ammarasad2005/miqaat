@@ -159,10 +159,18 @@ export function CelestialArc() {
               
               {/* The Sun Sphere */}
               <div 
-                className="relative w-12 h-12 rounded-full"
+                className="relative w-16 h-16 rounded-full overflow-hidden"
                 style={{
-                  background: 'radial-gradient(circle at 30% 30%, #ffffff 0%, #fef08a 30%, #f59e0b 80%, #ea580c 100%)',
-                  boxShadow: '0 0 30px rgba(253, 224, 71, 0.8), inset -4px -4px 10px rgba(234, 88, 12, 0.6)'
+                  backgroundImage: "url('/sun-texture.png')",
+                  backgroundSize: "200% 100%",
+                  // Spin animation
+                  animation: reduceMotion ? 'none' : 'spinMoon 30s linear infinite',
+                  // Complex 3D shading: bright hot spot in the center, fiery edges
+                  boxShadow: `
+                    inset -8px -8px 20px rgba(234, 88, 12, 0.8),
+                    inset 8px 8px 20px rgba(253, 224, 71, 0.6),
+                    0 0 30px rgba(253, 224, 71, 0.6)
+                  `
                 }}
               />
             </div>
