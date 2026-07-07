@@ -28,6 +28,9 @@ import { NotificationScheduler } from '@/components/prayer/notification-schedule
 import { LiveCountdown } from '@/components/prayer/live-countdown';
 import { OnboardingModal } from '@/components/prayer/onboarding-modal';
 import { AmbientBackground } from '@/components/theme/ambient-background';
+import { HeaderDropdown } from '@/components/layout/header-dropdown';
+import { FaqSection } from '@/components/layout/faq-section';
+import { SiteFooter } from '@/components/layout/site-footer';
 
 const PRAYER_DISPLAY_NAMES: Record<PrayerName, string> = {
   fajr: 'Fajr',
@@ -129,6 +132,7 @@ export default function Home() {
               >
                 <Settings className="w-6 h-6 text-foreground" />
               </Link>
+              <HeaderDropdown />
             </div>
           </div>
           <div className="pl-[3.25rem] -mt-1">
@@ -230,6 +234,9 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <FaqSection id="faq" />
+      <SiteFooter />
     </main>
     </>
   );
