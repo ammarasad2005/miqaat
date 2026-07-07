@@ -1,4 +1,4 @@
-import { Coordinates, PrayerTimes, CalculationParameters } from 'adhan';
+import { Coordinates, PrayerTimes, CalculationParameters, HighLatitudeRule } from 'adhan';
 import { CalculationMethodId, CALCULATION_METHODS } from './methods';
 
 export interface CalculatePrayerTimesParams {
@@ -26,7 +26,8 @@ export function calculatePrayerTimes({
   const coordinates = new Coordinates(lat, lng);
   const calculationParameters: CalculationParameters = CALCULATION_METHODS[method].getAdhanMethod();
   
-  // High latitude adjustments could be added here in the future
+  // Apply high latitude rule to prevent errors or incorrect times in extreme northern/southern regions
+  calculationParameters.highLatitudeRule = HighLatitudeRule.TwilightAngle;
   
   const prayerTimes = new PrayerTimes(coordinates, date, calculationParameters);
 
