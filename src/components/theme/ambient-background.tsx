@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useTimeOfDay } from '@/lib/theme/useTimeOfDay';
+import { CelestialArc } from '@/components/theme/celestial-arc';
 
 export function AmbientBackground() {
   const { timeOfDay } = useTimeOfDay();
@@ -37,18 +38,20 @@ export function AmbientBackground() {
           100% { transform: scale(1.2) translate(5%, 5%); opacity: 0.5; }
         }
       `}</style>
+      
+      <CelestialArc />
 
       {(timeOfDay === 'dawn' || timeOfDay === 'day') && (
-        <div className="absolute inset-0 flex opacity-60 ambient-drift">
-          {/* Use radial gradients instead of SVG blurs for massive performance gain */}
-          <div className="absolute top-1/4 left-[10%] w-[40vw] h-[40vw] rounded-full bg-primary/20 blur-3xl mix-blend-screen" />
-          <div className="absolute top-1/5 left-[30%] w-[50vw] h-[50vw] rounded-full bg-primary/10 blur-3xl mix-blend-screen" />
-          <div className="absolute top-1/3 left-[40%] w-[35vw] h-[35vw] rounded-full bg-primary/20 blur-3xl mix-blend-screen" />
+        <div className="absolute inset-0 flex opacity-80 ambient-drift">
+          {/* Cloud shapes using stacked radial gradients */}
+          <div className="absolute top-[15%] left-[5%] w-[45vw] h-[25vw] rounded-[100%] bg-primary/20 blur-[60px] mix-blend-screen" />
+          <div className="absolute top-[25%] left-[25%] w-[55vw] h-[30vw] rounded-[100%] bg-primary/15 blur-[80px] mix-blend-screen" />
+          <div className="absolute top-[10%] left-[45%] w-[40vw] h-[20vw] rounded-[100%] bg-primary/25 blur-[50px] mix-blend-screen" />
           
           {/* Mirrored half for seamless loop */}
-          <div className="absolute top-1/4 left-[60%] w-[40vw] h-[40vw] rounded-full bg-primary/20 blur-3xl mix-blend-screen" />
-          <div className="absolute top-1/5 left-[80%] w-[50vw] h-[50vw] rounded-full bg-primary/10 blur-3xl mix-blend-screen" />
-          <div className="absolute top-1/3 left-[90%] w-[35vw] h-[35vw] rounded-full bg-primary/20 blur-3xl mix-blend-screen" />
+          <div className="absolute top-[15%] left-[55%] w-[45vw] h-[25vw] rounded-[100%] bg-primary/20 blur-[60px] mix-blend-screen" />
+          <div className="absolute top-[25%] left-[75%] w-[55vw] h-[30vw] rounded-[100%] bg-primary/15 blur-[80px] mix-blend-screen" />
+          <div className="absolute top-[10%] left-[95%] w-[40vw] h-[20vw] rounded-[100%] bg-primary/25 blur-[50px] mix-blend-screen" />
         </div>
       )}
 

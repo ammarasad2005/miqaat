@@ -5,6 +5,9 @@ export type TimeOfDay = 'dawn' | 'day' | 'golden' | 'night';
 interface TimeOfDayState {
   timeOfDay: TimeOfDay;
   override: TimeOfDay | null;
+  sunrise: Date | null;
+  sunset: Date | null;
+  fajr: Date | null;
   setOverride: (override: TimeOfDay | null) => void;
   updateTimeOfDay: (sunrise?: Date, sunset?: Date, fajr?: Date) => void;
 }
@@ -45,7 +48,15 @@ export const computeTimeOfDay = (
 export const useTimeOfDay = create<TimeOfDayState>((set) => ({
   timeOfDay: computeTimeOfDay(),
   override: null,
+  sunrise: null,
+  sunset: null,
+  fajr: null,
   setOverride: (override) => set({ override }),
   updateTimeOfDay: (sunrise, sunset, fajr) => 
-    set({ timeOfDay: computeTimeOfDay(new Date(), sunrise, sunset, fajr) }),
+    set((state) => ({ 
+      timeOfDay: computeTimeOfDay(new Date(), sunrise ?? state.sunrise ?? undefined, sunset ?? state.sunset ?? undefined, fajr ?? state.fajr ?? undefined),
+      sunrise: sunrise !== undefined ? sunrise : state.sunrise,
+      sunset: sunset !== undefined ? sunset : state.sunset,
+      fajr: fajr !== undefined ? fajr : state.fajr
+    })),
 }));
