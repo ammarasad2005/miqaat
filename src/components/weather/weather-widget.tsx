@@ -30,7 +30,7 @@ export function WeatherWidget() {
   const { tempC, apparentTempC, conditionCode } = data.current;
 
   return (
-    <Link href="/weather" className="group">
+    <Link href="/weather" className="group" aria-label="View Weather">
       <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-card/30 border border-border/50 backdrop-blur-md text-muted-foreground text-xs font-medium font-sans shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all hover:bg-card/40 hover:text-foreground">
         {React.createElement(getWeatherIcon(conditionCode), { className: "w-4 h-4 text-foreground/70 group-hover:text-foreground transition-colors" })}
         <span className="flex items-center gap-1">

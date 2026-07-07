@@ -6,7 +6,12 @@ import { ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import { AnimatedLogo } from '@/components/brand/animated-logo';
-import { QiblaCompass } from '@/components/qibla/qibla-compass';
+import dynamic from 'next/dynamic';
+
+const QiblaCompass = dynamic(
+  () => import('@/components/qibla/qibla-compass').then(mod => mod.QiblaCompass),
+  { ssr: false, loading: () => <div className="w-64 h-64 md:w-80 md:h-80 rounded-full border border-border bg-card/50 animate-pulse" /> }
+);
 import { LocationSetup } from '@/components/prayer/location-setup';
 import { useLocationStore } from '@/lib/store/locationStore';
 

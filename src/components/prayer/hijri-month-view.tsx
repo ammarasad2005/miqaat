@@ -146,6 +146,7 @@ export function HijriMonthView() {
                         onClick={() => hasEvent && setSelectedEvent(events[0])}
                         role={hasEvent ? "button" : undefined}
                         tabIndex={hasEvent ? 0 : undefined}
+                        aria-label={hasEvent ? `${events[0].name} on ${day.date.toDateString()}` : undefined}
                         className={cn(
                           "group relative aspect-square flex flex-col items-center justify-center p-1 rounded-xl transition-all",
                           day.isPadding ? "opacity-30" : "hover:bg-muted/50",

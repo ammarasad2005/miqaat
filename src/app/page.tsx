@@ -4,7 +4,17 @@ import * as React from 'react';
 import { LocationSetup } from '@/components/prayer/location-setup';
 import { PrayerTimeline } from '@/components/prayer/prayer-timeline';
 import { HijriHeroCard } from '@/components/prayer/hijri-hero-card';
-import { HijriMonthView } from '@/components/prayer/hijri-month-view';
+import dynamic from 'next/dynamic';
+
+const HijriMonthView = dynamic(
+  () => import('@/components/prayer/hijri-month-view').then(mod => mod.HijriMonthView),
+  { ssr: false, loading: () => <div className="h-[384px] w-full animate-pulse bg-card/50 border border-border/50 rounded-3xl" /> }
+);
+
+const DailyContentPanel = dynamic(
+  () => import('@/components/reflection/daily-content-panel').then(mod => mod.DailyContentPanel),
+  { ssr: false, loading: () => <div className="h-64 w-full animate-pulse bg-card/60 border border-border/50 shadow-sm rounded-3xl mt-6" /> }
+);
 import { SplashScreen } from '@/components/ui/splash-screen';
 import { AnimatedLogo } from '@/components/brand/animated-logo';
 import { useLocationStore } from '@/lib/store/locationStore';
@@ -13,7 +23,6 @@ import { CalendarDays, Clock, Settings, Compass } from 'lucide-react';
 import Link from 'next/link';
 import { NotificationScheduler } from '@/components/prayer/notification-scheduler';
 import { WeatherWidget } from '@/components/weather/weather-widget';
-import { DailyContentPanel } from '@/components/reflection/daily-content-panel';
 
 export default function Home() {
   const [isMounted, setIsMounted] = React.useState(false);
