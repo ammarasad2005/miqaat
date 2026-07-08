@@ -91,16 +91,25 @@ export function CelestialArc() {
     isDragging.current = true;
   };
 
+  const lastPanTime = useRef<number | null>(null);
   const handlePan = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     // Directly update the rotation by the pan delta
     rotation.set(rotation.get() + info.delta.x);
-    // Update velocity based on the pan delta so it carries momentum when released
-    // (Assuming ~16ms per frame for 60fps)
-    velocity.set(info.delta.x / 16);
+    // THM-016: compute real instantaneous velocity using actual time
+    // delta instead of assuming 16ms (60fps). On 120Hz displays the
+    // old formula gave 2x too-high velocity; on throttled background
+    // tabs it gave 6x too-low.
+    const now = performance.now();
+    if (lastPanTime.current !== null) {
+      const dt = Math.max(8, now - lastPanTime.current);
+      velocity.set(info.delta.x / dt);
+    }
+    lastPanTime.current = now;
   };
 
   const handlePanEnd = () => {
     isDragging.current = false;
+    lastPanTime.current = null;
   };
 
   return (

@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server';
 import { rateLimit, getClientIp, safeParseJson } from '@/lib/api-utils';
 
 function isValidReflection(output: string): boolean {
-  if (!output || typeof output !== 'string' || output.trim().length < 10) return false;
+  // P-H-044: removed redundant `output.trim().length < 10` check —
+  // the word-count check (>= 15 words) is strictly stronger (15
+  // one-letter words = 29 chars minimum).
+  if (!output || typeof output !== 'string') return false;
 
   const words = output.trim().split(/\s+/);
   if (words.length < 15) return false; // Too short to be a 2-4 sentence reflection
